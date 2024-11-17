@@ -1,0 +1,36 @@
+drop table if exists Usertable;
+drop table if exists Tasktable;
+
+
+
+-- Create User Table
+CREATE TABLE UserTable (
+    UserID INT PRIMARY KEY IDENTITY(1,1),
+    UserName NVARCHAR(100) NOT NULL,
+    UserEmail NVARCHAR(100) NOT NULL UNIQUE,
+    UserPassword NVARCHAR(255) NOT NULL,
+    Role NVARCHAR(50) NOT NULL
+);
+
+-- Create Task Table
+CREATE TABLE TaskTable (
+    TaskID INT PRIMARY KEY IDENTITY(1,1),
+    Title NVARCHAR(255) NOT NULL,
+    Description NVARCHAR(MAX),
+    Status NVARCHAR(50) NOT NULL,
+    EmpID INT,
+    FOREIGN KEY (EmpID) REFERENCES UserTable(UserID) 
+);
+
+
+INSERT INTO UserTable (UserName, UserEmail, UserPassword, Role)
+VALUES 
+('Alice Johnson', 'alice.johnson@example.com', 'password123', 'Admin'),
+('Bob Smith', 'bob.smith@example.com', 'password456', 'Employee'),
+('Charlie Brown', 'charlie.brown@example.com', 'password789', 'Employee');
+
+INSERT INTO TaskTable (Title, Description, Status, EmpID)
+VALUES 
+('Prepare Presentation', 'Prepare the slides for the client meeting', 'In Progress', 2),
+('Fix Login Issue', 'Resolve the bug in the login functionality', 'Pending', 3),
+('Update Documentation', 'Update the project documentation for the latest release', 'Completed', 1);
